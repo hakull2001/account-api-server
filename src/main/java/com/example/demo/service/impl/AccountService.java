@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,6 @@ import com.example.demo.dao.Account;
 import com.example.demo.dao.RegistrationAccountToken;
 import com.example.demo.dao.ResetPasswordToken;
 import com.example.demo.dto.pagination.PaginateDTO;
-import com.example.demo.event.registration.OnSendRegistrationAccountConfirmViaEmail;
 import com.example.demo.form.account.CreateAccountForm;
 import com.example.demo.form.account.UpdateAccountForm;
 import com.example.demo.repositories.AccountRepository;
@@ -55,9 +53,6 @@ public class AccountService extends BasePagination<Account, AccountRepository> i
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private ApplicationEventPublisher eventPublisher;
-
-	@Autowired
 	private DepartmentRepository departmentRepository;
 
 	@Autowired
@@ -82,7 +77,7 @@ public class AccountService extends BasePagination<Account, AccountRepository> i
 //		account.setDepartment(department);
 		accountRepository.save(account);
 		createNewRegistrationAccountToken(account);
-		sendConfirmAccountRegistrationViaEmail(account.getEmail());
+		emailService.sendRegistrationAccountConfirm(account.getEmail());
 	}
 
 	@Override
@@ -129,11 +124,6 @@ public class AccountService extends BasePagination<Account, AccountRepository> i
 	@Override
 	public Account findByEmail(String email) {
 		return accountRepository.findByEmail(email);
-	}
-
-	@Override
-	public void sendConfirmAccountRegistrationViaEmail(String email) {
-		eventPublisher.publishEvent(new OnSendRegistrationAccountConfirmViaEmail(email));
 	}
 
 	private void createNewRegistrationAccountToken(Account account) {

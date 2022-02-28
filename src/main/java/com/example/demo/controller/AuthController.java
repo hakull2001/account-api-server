@@ -92,13 +92,13 @@ public class AuthController extends BaseController<AuthenticationResponse> {
 		return new ResponseEntity<>(Common.SEND_EMAIL, HttpStatus.OK);
 	}
 	
-	@GetMapping("/active")
-	public ResponseEntity<?> activeAccountViaEmail(@RequestParam(value = "token") String token){
+	@GetMapping("/active/{token}")
+	public ResponseEntity<?> activeAccountViaEmail(@PathVariable(value = "token") String token){
 		accountService.activeAcount(token);
 		return new ResponseEntity<>(Common.ACTIVE_SUCCESS, HttpStatus.OK);
 	}
 	
-	@GetMapping("/resetPassword")
+	@GetMapping("/forget-password")
 	public ResponseEntity<?> resetPasswordViaEmail(@RequestParam(value = "email") String email){
 		accountService.createRequestResetPassword(email);
 		return new ResponseEntity<>(Common.SEND_RESET_PASSWORD, HttpStatus.OK);

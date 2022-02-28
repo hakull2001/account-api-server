@@ -9,9 +9,9 @@ public class Common {
 
 	public static final String SUBJECT_RESET = "Reset password Account";
 	
-	public static final String ACTIVE_ACCOUNT = "/api/v1/auth/active?token=";
+	public static final String ACTIVE_ACCOUNT = "/api/v1/auth/active/";
 	
-	public static final String RESET_PASSWORD = "/api/v1/auth/reset-password?token=";	
+	public static final String RESET_PASSWORD = "/auth/reset-password/";	
 
 	public static final String CONTENT = "You have successfully registered an account, please click the link below to activate your account:\n";
 	

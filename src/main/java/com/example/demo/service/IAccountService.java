@@ -32,8 +32,6 @@ public interface IAccountService {
 	
 	boolean checkExistsByUsername(String userName);
 
-	void sendConfirmAccountRegistrationViaEmail(String email);
-
 	void activeAcount(String token);
 			
 	void resetPassword(String token, String newPassword);

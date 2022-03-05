@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import com.example.demo.dao.Account;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthenticationResponse {
-    private String jwt;
-    private Long userId;
-    private String userName;
-    private String role;
+    private String token;
+    private Account account;
 }

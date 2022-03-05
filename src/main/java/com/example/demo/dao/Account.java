@@ -65,6 +65,9 @@ public class Account implements Serializable {
 	@Column(name = "`status`", nullable = false)
 	private StatusAccountEnum status = StatusAccountEnum.NOT_ACTIVE;
 
+	@Column(name = "avatarUrl", nullable = false)
+	private String avatarUrl;
+	
 	@Column(name = "role", nullable = false)
 	private String role;
 

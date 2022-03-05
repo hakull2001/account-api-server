@@ -29,9 +29,14 @@ url:
 jwt:
   secret_key: ${JWT_SECRET}
   time_expiration: 86400000
+  refresh_token_expires : 864000000
+  refresh_token_secret : ${REFRESH_TOKEN_SECRET}
 
 cloudinary:
   url: ${CLOUDINARY_URL}
 
 storage:
   location: upload-dir
+
+upload:
+  link : ${LinkFolder}

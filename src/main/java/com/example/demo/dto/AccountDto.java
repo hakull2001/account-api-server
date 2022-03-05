@@ -34,6 +34,8 @@ public class AccountDto {
 	@NotBlank
 	private String password;
 	
+	private String avatarUrl;
+	
 	@IsIn(value = {RoleEnum.ADMIN, RoleEnum.EMPLOYEE, RoleEnum.MANAGER}, message = "role is invalid")
 	private String role;
 

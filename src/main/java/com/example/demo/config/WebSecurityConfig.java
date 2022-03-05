@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import com.example.demo.exception.CustomEntryPoint;
 import com.example.demo.filters.JwtRequestFilter;
 import com.example.demo.service.impl.MyUserDetailsService;
 
@@ -50,18 +51,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.sessionManagement()
 //				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		//http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-		http.cors().and().authorizeRequests()
-			.antMatchers("/api/v1/auth/**").permitAll()
+		http.cors().configurationSource(request -> corsConfiguration())
+	        .and().csrf().disable()
+	        .authorizeRequests()
+	        .antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/auth/email/**").permitAll()
 			.antMatchers("/api/v1/auth/userName/**").permitAll()
-			.antMatchers("/api/v1/accounts/**").authenticated()
-			.antMatchers("/api/v1/departments/**").authenticated()
-			//.anyRequest().permitAll()
-			.and()
-			.httpBasic()
-			.and()
-			.csrf()
-			.disable();
+			.antMatchers("/api/v1/auth/image/**").authenticated()
+	        .and()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.exceptionHandling().authenticationEntryPoint(new CustomEntryPoint());
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 	CorsConfiguration corsConfiguration() {
